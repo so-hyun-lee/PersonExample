@@ -9,7 +9,7 @@ public class OfficeTableViewController : TableViewController
 
     private List<Office> officeList = new List<Office>();
 
-    private void Start()
+    protected void Start()
     {
         StartCoroutine(LoadData());
     }
@@ -21,7 +21,20 @@ public class OfficeTableViewController : TableViewController
 
     protected override TableViewCell cellForRowAtIndex(int index)
     {
-        return null;
+        //cell객체 만들고 반환
+        OfficeTableViewCell cell = dequeueReuseableCell() as OfficeTableViewCell;
+
+        if (cell == null)
+        {
+            cell = Instantiate(cellPrefab, content) as OfficeTableViewCell;
+        }
+
+        cell.Index = index;
+        cell.officeName.text = officeList[index].사무소명;
+        cell.businessType.text = officeList[index].영업구분;
+        cell.phoneNumber.text = officeList[index].전화번호;
+
+        return cell;
     }
 
 
@@ -53,6 +66,12 @@ public class OfficeTableViewController : TableViewController
 
                 }             
             }
+            base.Start();
         }
     }
+
+
+ 
+
+
 }
